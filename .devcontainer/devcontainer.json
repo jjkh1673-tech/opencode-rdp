@@ -1,0 +1,19 @@
+{
+    "name": "Permanent RDP Workspace",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "hostRequirements": {
+        "cpus": 4,
+        "memory": "16gb"
+    },
+    "forwardPorts": [3389],
+    "portsAttributes": {
+        "3389": {
+            "label": "RDP Access",
+            "onAutoForward": "notify"
+        }
+    },
+    "postStartCommand": "bash /usr/local/bin/start-kiosk.sh",
+    "remoteUser": "root"
+}
