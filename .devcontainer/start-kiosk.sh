@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# Setup Kiosk script for root X session
-cat << 'XSTARTUP' > /root/.xsession
+# Setup VNC configuration directory for root
+mkdir -p /root/.vnc
+
+# Create X startup script for Kiosk mode
+cat << 'XSTARTUP' > /root/.vnc/xstartup
 #!/bin/bash
 xset s off
 xset -dpms
@@ -9,20 +12,14 @@ xset s noblank
 xfwm4 &
 opencode-ai
 XSTARTUP
-chmod +x /root/.xsession
 
-# Start dbus (required for some XFCE components)
-/etc/init.d/dbus start || true
+chmod +x /root/.vnc/xstartup
 
-# Start XRDP safely
-/etc/init.d/xrdp start || true
-sleep 2
+# Start VNC server on display :1 without password requirement
+USER=root vncserver :1 -geometry 1920x1080 -depth 24 -SecurityTypes None
 
-# Check if xrdp is running, if not start it directly
-if ! pgrep xrdp > /dev/null; then
-    xrdp-sesman
-    xrdp
-fi
+# Start WebSockets proxy for noVNC (redirects web traffic to VNC)
+websockify --web=/usr/share/novnc/ 6080 localhost:5901 &
 
-# Keep background process alive forever
-tail -f /var/log/xrdp.log /var/log/xrdp-sesman.log
+# Keep codespace alive forever
+while true; do sleep 1000; done

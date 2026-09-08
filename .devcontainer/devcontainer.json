@@ -1,5 +1,5 @@
 {
-    "name": "Permanent RDP Workspace",
+    "name": "Web GUI Codespace (Root)",
     "build": {
         "dockerfile": "Dockerfile"
     },
@@ -7,10 +7,10 @@
         "cpus": 4,
         "memory": "16gb"
     },
-    "forwardPorts": [3389],
+    "forwardPorts": [6080],
     "portsAttributes": {
-        "3389": {
-            "label": "RDP Access",
+        "6080": {
+            "label": "Web Desktop",
             "onAutoForward": "notify"
         }
     },
