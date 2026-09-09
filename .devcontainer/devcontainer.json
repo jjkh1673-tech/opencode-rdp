@@ -1,5 +1,5 @@
 {
-    "name": "Web GUI Codespace (Root & Hermes)",
+    "name": "Web GUI Codespace (Hermes & OpenCode)",
     "build": {
         "dockerfile": "Dockerfile"
     },
@@ -12,10 +12,6 @@
         "6080": {
             "label": "Web Desktop",
             "onAutoForward": "notify"
-        },
-        "7860": {
-            "label": "Hermes WebUI",
-            "onAutoForward": "silent"
         }
     },
     "customizations": {
@@ -30,5 +26,5 @@
     },
     "postCreateCommand": "bash /usr/local/bin/setup-hermes.sh",
     "postStartCommand": "bash /usr/local/bin/start-kiosk.sh",
-    "remoteUser": "root"
+    "remoteUser": "vscode"
 }

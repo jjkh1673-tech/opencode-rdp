@@ -1,31 +1,28 @@
 #!/bin/bash
+USER_HOME="/home/vscode"
+mkdir -p $USER_HOME/.vnc
 
-# Cleanup any old VNC locks
-rm -rf /tmp/.X1-lock /tmp/.X11-unix/X1
+# Cleanup old locks
+sudo rm -rf /tmp/.X1-lock /tmp/.X11-unix/X1
+vncserver -kill :1 2>/dev/null || true
+pkill websockify 2>/dev/null || true
 
-mkdir -p /root/.vnc
-
-# Create X startup script for Kiosk mode
-cat << 'XSTARTUP' > /root/.vnc/xstartup
+cat << 'XSTARTUP' > $USER_HOME/.vnc/xstartup
 #!/bin/bash
 xset s off
 xset -dpms
 xset s noblank
-
-# Start Window Manager
 xfwm4 &
-
-# Autostart Hermes AI in a Terminal Window
 xfce4-terminal --maximize --title="Hermes AI Server" -e "bash -c 'cd /workspaces/opencode-rdp-workspace/hermes-ai && source venv/bin/activate && python app.py; exec bash'" &
 XSTARTUP
 
-chmod +x /root/.vnc/xstartup
+chmod +x $USER_HOME/.vnc/xstartup
+chown -R vscode:vscode $USER_HOME/.vnc
 
-# Start VNC server on display :1 without password requirement
-USER=root vncserver :1 -geometry 1920x1080 -depth 24 -SecurityTypes None
+# Start VNC
+vncserver :1 -geometry 1920x1080 -depth 24 -SecurityTypes None
 
-# Start WebSockets proxy for noVNC in the BACKGROUND!
-nohup websockify --web=/usr/share/novnc/ 6080 localhost:5901 > /var/log/websockify.log 2>&1 &
+# Start noVNC
+nohup websockify --web=/usr/share/novnc/ 6080 localhost:5901 > /tmp/websockify.log 2>&1 &
 
-# Exit successfully so Codespace finishes "Setting up..." status
 exit 0
