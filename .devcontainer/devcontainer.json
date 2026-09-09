@@ -7,18 +7,24 @@
         "cpus": 4,
         "memory": "16gb"
     },
-    "forwardPorts": [6080],
+    "forwardPorts": [6080, 7860],
     "portsAttributes": {
         "6080": {
             "label": "Web Desktop",
             "onAutoForward": "notify"
+        },
+        "7860": {
+            "label": "Hermes WebUI",
+            "onAutoForward": "silent"
         }
     },
     "customizations": {
         "vscode": {
             "settings": {
                 "security.workspace.trust.enabled": false,
-                "security.workspace.trust.startupPrompt": "never"
+                "security.workspace.trust.startupPrompt": "never",
+                "security.workspace.trust.emptyWindow": false,
+                "security.workspace.trust.untrustedFiles": "open"
             }
         }
     },
