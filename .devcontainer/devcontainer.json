@@ -1,5 +1,5 @@
 {
-    "name": "Web GUI Codespace (Hermes & OpenCode)",
+    "name": "Web GUI Codespace",
     "build": {
         "dockerfile": "Dockerfile"
     },
@@ -7,11 +7,13 @@
         "cpus": 4,
         "memory": "16gb"
     },
-    "forwardPorts": [6080, 7860],
+    "forwardPorts": [6080],
     "portsAttributes": {
         "6080": {
             "label": "Web Desktop",
-            "onAutoForward": "notify"
+            "onAutoForward": "openBrowser",
+            "requireLocalPort": true,
+            "protocol": "http"
         }
     },
     "customizations": {
