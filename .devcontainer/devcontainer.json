@@ -1,5 +1,5 @@
 {
-    "name": "Web GUI Codespace (Root)",
+    "name": "Web GUI Codespace (Root & Hermes)",
     "build": {
         "dockerfile": "Dockerfile"
     },
@@ -14,6 +14,15 @@
             "onAutoForward": "notify"
         }
     },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "security.workspace.trust.enabled": false,
+                "security.workspace.trust.startupPrompt": "never"
+            }
+        }
+    },
+    "postCreateCommand": "bash /usr/local/bin/setup-hermes.sh",
     "postStartCommand": "bash /usr/local/bin/start-kiosk.sh",
     "remoteUser": "root"
 }
