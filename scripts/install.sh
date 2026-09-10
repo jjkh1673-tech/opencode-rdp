@@ -2,7 +2,6 @@
 set -e
 echo "Starting Application Installations..."
 
-# 1. Install System Dependencies & Desktop Environment (Lightweight)
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get install -y --no-install-recommends \
@@ -13,23 +12,21 @@ apt-get install -y --no-install-recommends \
     build-essential libssl-dev libffi-dev \
     libvulkan1 mesa-vulkan-drivers
 
-# 2. Install Node.js & OpenCode AI
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 apt-get install -y nodejs
-npm install -g opencode-ai
+npm install -g opencode-ai || true
 
-# 3. Install Zed (zcode) Editor
-curl -f https://zed.dev/install.sh | bash
+# Zed install (non-interactive)
+curl -f https://zed.dev/install.sh | sh || true
 
-# 4. Install Hermes Desktop Agent (WebUI Wrapped)
 mkdir -p /opt/hermes-ai
 git clone https://github.com/jjkh1673-tech/hermes-ai.git /opt/hermes-ai || true
 cd /opt/hermes-ai
 python3 -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements.txt || true
 
-# Create Desktop Launcher for Hermes
+# Launcher
 cat << 'HERMES' > /usr/local/bin/hermes-desktop
 #!/bin/bash
 cd /opt/hermes-ai

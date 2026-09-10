@@ -14,10 +14,6 @@
             "onAutoForward": "openBrowser",
             "requireLocalPort": true,
             "protocol": "http"
-        },
-        "7860": {
-            "label": "Hermes API",
-            "onAutoForward": "silent"
         }
     },
     "customizations": {
@@ -28,7 +24,7 @@
             }
         }
     },
-    "overrideCommand": false,
     "postCreateCommand": "bash /usr/local/bin/scripts/verify.sh",
+    "postStartCommand": "bash /usr/local/bin/scripts/startup.sh",
     "remoteUser": "root"
 }
