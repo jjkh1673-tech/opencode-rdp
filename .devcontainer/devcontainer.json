@@ -1,7 +1,7 @@
 {
     "name": "Elite Autonomous Workspace",
     "build": {
-        "dockerfile": "../docker/Dockerfile"
+        "dockerfile": "Dockerfile"
     },
     "features": {
         "ghcr.io/devcontainers/features/sshd:1": {
@@ -34,6 +34,7 @@
         }
     },
     "overrideCommand": false,
-    "postCreateCommand": "bash /usr/local/bin/scripts/verify.sh",
+    "postCreateCommand": "bash .devcontainer/install-user.sh",
+    "postStartCommand": "bash .devcontainer/startup.sh",
     "remoteUser": "root"
 }
