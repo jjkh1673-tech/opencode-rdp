@@ -1,32 +1,34 @@
 {
-    "name": "Web GUI Codespace",
+    "name": "Elite Autonomous Workspace",
     "build": {
-        "dockerfile": "Dockerfile"
+        "dockerfile": "../docker/Dockerfile"
     },
     "hostRequirements": {
         "cpus": 4,
         "memory": "16gb"
     },
-    "forwardPorts": [6080],
+    "forwardPorts": [6080, 7860],
     "portsAttributes": {
         "6080": {
-            "label": "Web Desktop",
+            "label": "Browser Desktop",
             "onAutoForward": "openBrowser",
             "requireLocalPort": true,
             "protocol": "http"
+        },
+        "7860": {
+            "label": "Hermes API",
+            "onAutoForward": "silent"
         }
     },
     "customizations": {
         "vscode": {
             "settings": {
                 "security.workspace.trust.enabled": false,
-                "security.workspace.trust.startupPrompt": "never",
-                "security.workspace.trust.emptyWindow": false,
-                "security.workspace.trust.untrustedFiles": "open"
+                "security.workspace.trust.startupPrompt": "never"
             }
         }
     },
-    "postCreateCommand": "bash /usr/local/bin/setup-hermes.sh",
-    "postStartCommand": "bash /usr/local/bin/start-kiosk.sh",
-    "remoteUser": "vscode"
+    "overrideCommand": false,
+    "postCreateCommand": "bash /usr/local/bin/scripts/verify.sh",
+    "remoteUser": "root"
 }

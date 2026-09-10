@@ -1,0 +1,32 @@
+{
+    "name": "Web GUI Codespace",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "hostRequirements": {
+        "cpus": 4,
+        "memory": "16gb"
+    },
+    "forwardPorts": [6080],
+    "portsAttributes": {
+        "6080": {
+            "label": "Web Desktop",
+            "onAutoForward": "openBrowser",
+            "requireLocalPort": true,
+            "protocol": "http"
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "security.workspace.trust.enabled": false,
+                "security.workspace.trust.startupPrompt": "never",
+                "security.workspace.trust.emptyWindow": false,
+                "security.workspace.trust.untrustedFiles": "open"
+            }
+        }
+    },
+    "postCreateCommand": "bash /usr/local/bin/setup-hermes.sh",
+    "postStartCommand": "bash /usr/local/bin/start-kiosk.sh",
+    "remoteUser": "vscode"
+}
