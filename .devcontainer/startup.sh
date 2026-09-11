@@ -13,7 +13,7 @@ nohup fluxbox > /tmp/fluxbox.log 2>&1 &
 nohup x11vnc -display :0 -nopw -forever -quiet -bg -xkb > /tmp/x11vnc.log 2>&1 &
 
 # Start Web Interface (noVNC)
-nohup websockify --web=/usr/share/novnc/ 6080 localhost:5900 > /tmp/websockify.log 2>&1 &
+nohup websockify --web=/usr/share/novnc/ ${PORT:-6080} localhost:5900 > /tmp/websockify.log 2>&1 &
 
 # Also start Hermes AI server in the background for auto-readiness
 if [ -d "/opt/hermes-ai" ]; then
