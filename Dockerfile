@@ -18,16 +18,11 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 
 # Copy configuration scripts
 COPY .devcontainer/install-user.sh /usr/local/bin/install-user.sh
-COPY .devcontainer/startup.sh /usr/local/bin/startup.sh
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/*.sh
 
 # Run the installation script
 RUN /usr/local/bin/install-user.sh
-
-# Allow the platform to set the port dynamically
-ENV PORT=6080
-EXPOSE $PORT
 
 # Start the environment
 CMD ["/usr/local/bin/start.sh"]
